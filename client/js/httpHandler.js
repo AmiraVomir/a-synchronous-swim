@@ -19,7 +19,8 @@
     })
   }
 
-  // setInterval(getSwimCommand, 5000);
+  // setInterval(getSwimCommand, 500);
+  getSwimCommand();
 
 
   /////////////////////////////////////////////////////////////////////

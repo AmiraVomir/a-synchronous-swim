@@ -4,6 +4,8 @@ const path = require('path');
 const expect = require('chai').expect;
 const server = require('./mockServer');
 const _ = require('../node_modules/underscore/underscore.js')
+const messages = require('../js/messageQueue.js');
+
 
 const httpHandler = require('../js/httpHandler');
 
@@ -18,7 +20,6 @@ describe('server responses', () => {
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
     expect(res._data.toString()).to.be.empty;
-
     done();
   });
 
@@ -26,7 +27,9 @@ describe('server responses', () => {
     // write your test here
     let {req, res} = server.mock('/', "GET");
     httpHandler.router(req, res);
-    var containsDirection = _.contains(['up', 'right', 'down', 'left'], res._data.toString());
+    // var containsDirection = _.contains(['up', 'right', 'down', 'left', ''], res._data.toString());
+    var nextMessage = messages.dequeue();
+    var containsDirection = _.contains(['up', 'right', 'down', 'left', '^[[A', '^[[C', '^[[B', '^[[D', 'Your coach is on a break'], nextMessage);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
     expect(containsDirection).to.equal(true);
@@ -34,9 +37,9 @@ describe('server responses', () => {
     done();
   });
 
-  xit('should respond with 404 to a GET request for a missing background image', (done) => {
+  it('should respond with 404 to a GET request for a missing background image', (done) => {
     httpHandler.backgroundImageFile = path.join('.', 'spec', 'missing.jpg');
-    let {req, res} = server.mock('FILL_ME_IN', 'GET');
+    let {req, res} = server.mock('/', 'GET');
 
     httpHandler.router(req, res, () => {
       expect(res._responseCode).to.equal(404);
