@@ -5,13 +5,29 @@
   //
   // TODO: build the swim command fetcher here
   //
+  const getSwimCommand = function() {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      success: (response) => {
+        console.log("AJAX SUCCESS: ", response);
+        SwimTeam.move(response);
+      },
+      error: (response) => {
+        console.error("AJAX ERROR: ", response);
+      }
+    })
+  }
+
+  // setInterval(getSwimCommand, 5000);
+
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
 
-  const ajaxFileUplaod = (file) => {
+  const ajaxFileUpload = (file) => {
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
@@ -43,7 +59,7 @@
       return;
     }
 
-    ajaxFileUplaod(file);
+    ajaxFileUpload(file);
   });
 
 })();
