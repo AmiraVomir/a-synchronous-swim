@@ -48,6 +48,7 @@ module.exports.router = (req, res, next = ()=>{}) => {
   if (req.method === "OPTIONS") {
     res.writeHead(200, headers);
     res.end();
+    next();
   }
 
 };
