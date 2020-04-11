@@ -10,17 +10,31 @@
       type: 'GET',
       url: serverUrl,
       success: (response) => {
-        console.log("AJAX SUCCESS: ", response);
+        console.log("AJAX SWIM SUCCESS: ", response);
         SwimTeam.move(response);
       },
       error: (response) => {
-        console.error("AJAX ERROR: ", response);
+        console.error("AJAX SWIM ERROR: ", response);
       }
     })
   }
 
   // setInterval(getSwimCommand, 500);
   getSwimCommand();
+
+  const getImageBackground = function() {
+    $.ajax({
+      type: "GET",
+      url: serverUrl + "/background.jpg"
+      contentType: "image/jpeg",
+      success: (response) => {
+        console.log("AJAX IMAGE SUCCESS: ", response);
+      },
+      error :  (response) => {
+        console.error("AJAX IMAGE ERROR: ", response)
+      }
+    })
+  }
 
 
   /////////////////////////////////////////////////////////////////////

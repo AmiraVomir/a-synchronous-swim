@@ -23,9 +23,23 @@ module.exports.router = (req, res, next = ()=>{}) => {
   // }
 
   if (req.method === "GET") {
+    console.log('URL requested: ', req.url);
+    if (req.url === '/spec/missing.jpg') {
+      res.writeHead(404, 'file not found', headers);
+      res.end();
+      next();
+    }
+    if (req.url === '/background.jpg') { //sending a request for an image
+      var stats = fileSystem.statSync('/background.jpg');
+      res.setHeader('Content-Length', stats.size);
+      res.writeHead(200, headers);
+      var readStream = fileSystem.createReadStream('/background.jpg');
+      readStream.pipe(response);
+      res.end();
+      next();
+    }
     res.writeHead(200, headers);
     var nextMessage = messages.dequeue();
-    console.log(nextMessage);
     res.write(nextMessage);
     res.end();
     next(); // invoke next() at the end of a request to help with testing!
