@@ -27,9 +27,8 @@ describe('server responses', () => {
     // write your test here
     let {req, res} = server.mock('/', "GET");
     httpHandler.router(req, res);
-    // var containsDirection = _.contains(['up', 'right', 'down', 'left', ''], res._data.toString());
     var nextMessage = messages.dequeue();
-    var containsDirection = _.contains(['up', 'right', 'down', 'left', '^[[A', '^[[C', '^[[B', '^[[D', 'Your coach is on a break'], nextMessage);
+    var containsDirection = _.contains(['up', 'right', 'down', 'left', 'Your coach is on a break'], nextMessage);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
     expect(containsDirection).to.equal(true);

@@ -22,19 +22,19 @@
   // setInterval(getSwimCommand, 500);
   getSwimCommand();
 
-  const getImageBackground = function() {
-    $.ajax({
-      type: "GET",
-      url: serverUrl + "/background.jpg"
-      contentType: "image/jpeg",
-      success: (response) => {
-        console.log("AJAX IMAGE SUCCESS: ", response);
-      },
-      error :  (response) => {
-        console.error("AJAX IMAGE ERROR: ", response)
-      }
-    })
-  }
+  // const getImageBackground = function() {
+  //   $.ajax({
+  //     type: "GET",
+  //     url: serverUrl + "/background.jpg"
+  //     contentType: "image/jpeg",
+  //     success: (response) => {
+  //       console.log("AJAX IMAGE SUCCESS: ", response);
+  //     },
+  //     error :  (response) => {
+  //       console.error("AJAX IMAGE ERROR: ", response)
+  //     }
+  //   })
+  // }
 
 
   /////////////////////////////////////////////////////////////////////
