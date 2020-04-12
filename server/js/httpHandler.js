@@ -36,21 +36,21 @@ module.exports.router = (req, res, next = ()=>{}) => {
         res.end();
         next();
       });
-      // res.setHeader('Content-Length', stats.size);
-      // res.writeHead(200, headers);
-      // // var readStream = fs.createReadStream(module.exports.backgroundImageFile);
-      // // readStream.pipe(res);
-      // res.end();
-      // next();
     }
     if (req.url === '/') {
-      console.log('No req.url if statements are working!');
       res.writeHead(200, headers);
       var nextMessage = messages.dequeue();
       res.write(nextMessage);
       res.end();
       next();
     }
+  }
+
+  if (req.method === "POST") {
+    res.writeHead(201, headers);
+
+    res.end();
+    next();
   }
 
   if (req.method === "OPTIONS") {
