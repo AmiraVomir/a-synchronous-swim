@@ -17,7 +17,6 @@ module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
 
   if (req.method === "GET") {
-    console.log('URL requested: ', req.url);
     if (req.url === '/spec/missing.jpg') {
       res.writeHead(404, 'file not found', headers);
       res.end();
@@ -30,8 +29,6 @@ module.exports.router = (req, res, next = ()=>{}) => {
         } else {
           res.writeHead(200, headers);
           res.write(data, 'binary');
-          // var readStream = fs.createReadStream(module.exports.backgroundImageFile);
-          // readStream.pipe(res);
         }
         res.end();
         next();
@@ -47,10 +44,25 @@ module.exports.router = (req, res, next = ()=>{}) => {
   }
 
   if (req.method === "POST") {
-    res.writeHead(201, headers);
+    var imageData = Buffer.alloc(0);
+    req.on('data', (chunk) => {
+      imageData = Buffer.concat([imageData, chunk]);
+    });
 
-    res.end();
-    next();
+    req.on('end', () => {
+      var file = multipart.getFile(imageData);
+      fs.writeFile(module.exports.backgroundImageFile, file.data, (err) => {
+        if (err) {
+          res.writeHead(404, headers);
+          res.end();
+          next();
+        } else {
+          res.writeHead(201, headers);
+          res.end();
+          next();
+        };
+      });
+    });
   }
 
   if (req.method === "OPTIONS") {

@@ -22,19 +22,6 @@
   // setInterval(getSwimCommand, 500);
   getSwimCommand();
 
-  // const getImageBackground = function() {
-  //   $.ajax({
-  //     type: "GET",
-  //     url: serverUrl + "/background.jpg"
-  //     contentType: "image/jpeg",
-  //     success: (response) => {
-  //       console.log("AJAX IMAGE SUCCESS: ", response);
-  //     },
-  //     error :  (response) => {
-  //       console.error("AJAX IMAGE ERROR: ", response)
-  //     }
-  //   })
-  // }
 
 
   /////////////////////////////////////////////////////////////////////
@@ -42,7 +29,7 @@
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
 
-  const ajaxFileUpload = (file) => {
+  const ajaxFileUplaod = (file) => {
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
@@ -52,9 +39,10 @@
       cache: false,
       contentType: false,
       processData: false,
-      success: () => {
+      complete: (data) => {
         // reload the page
         window.location = window.location.href;
+        console.log('Data from Complete message: ', data);
       }
     });
   };
@@ -74,7 +62,7 @@
       return;
     }
 
-    ajaxFileUpload(file);
+    ajaxFileUplaod(file);
   });
 
 })();
